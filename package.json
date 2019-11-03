@@ -8,12 +8,14 @@
   "scripts": {
     "build": "tsc --pretty",
     "lint": "eslint '{src,test}/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "ospec build/**/*.spec.js",
-    "webpack": "NODE_ENV=production webpack"
+    "test": "ospec build/**/*.spec.js"
+  },
+  "repository": {
+    "url": "https://github.com/blacha/pretty-json-log"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Blayne Chard",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "@types/node": "^12.0.7",

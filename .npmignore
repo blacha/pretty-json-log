@@ -1,0 +1,6 @@
+*
+!pjl
+!build/**
+!bin/**
+!src/**
+!package.json

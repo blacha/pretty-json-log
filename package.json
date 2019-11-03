@@ -1,6 +1,9 @@
 {
   "name": "pretty-json-log",
   "version": "0.0.1",
+  "bin": {
+    "pjl": "pjl"
+  },
   "main": "pjl",
   "scripts": {
     "build": "tsc --pretty",

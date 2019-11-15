@@ -4,7 +4,8 @@
   "bin": {
     "pjl": "pjl"
   },
-  "main": "pjl",
+  "main": "build/index.ts",
+  "types": "build/index.d.ts",
   "scripts": {
     "build": "tsc --pretty",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",

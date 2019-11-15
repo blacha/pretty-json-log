@@ -20,18 +20,19 @@ function getLogStatus(level: number): string {
     return chalk.bgRed('FATAL');
 }
 
-/** Don't print these keys */
-const IGNORE_KEYS: { [key: string]: boolean } = {
-    pid: true,
-    time: true,
-    hostname: true,
-    level: true,
-    v: true,
-    name: true,
-    msg: true,
-};
-
 export class PrettySimple implements LogMessageFormatter {
+    /** Don't print these keys */
+    ignore: { [key: string]: boolean } = {
+        pid: true,
+        time: true,
+        hostname: true,
+        level: true,
+        v: true,
+        name: true,
+        msg: true,
+    };
+
+    /** minimum log level to print */
     level: number;
     constructor(level: number) {
         this.level = level;
@@ -40,7 +41,7 @@ export class PrettySimple implements LogMessageFormatter {
     private formatObject(obj: Record<string, any>): string[] {
         const kvs = [];
         for (const key of Object.keys(obj)) {
-            if (IGNORE_KEYS[key] === true) {
+            if (this.ignore[key] === true) {
                 continue;
             }
 
@@ -75,10 +76,14 @@ export class PrettySimple implements LogMessageFormatter {
         if (msg.level < this.level) {
             return null;
         }
+
         const time = new Date(msg.time);
-        const output = `[${time.toISOString()}] ${getLogStatus(msg.level)} ${chalk.blue(msg.msg)}`;
+        if (isNaN(time.getTime())) {
+            return null;
+        }
+
         const kvs = this.formatObject(msg);
         const kvString = kvs.join(', ');
-        return `${output} ${kvString}`;
+        return `[${time.toISOString()}] ${getLogStatus(msg.level)} ${chalk.blue(msg.msg)} ${kvString}`;
     }
 }

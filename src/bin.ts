@@ -3,7 +3,7 @@ import { StringDecoder } from 'string_decoder';
 import * as split from 'split2';
 import { PrettySimple } from './pretty/simple';
 
-function getJson(data: any) {
+function tryGetJson(data: any) {
     try {
         return JSON.parse(data);
     } catch {
@@ -11,13 +11,13 @@ function getJson(data: any) {
     }
 }
 
-class PrettyTransform extends Transform {
+export class PrettyTransform extends Transform {
     decoder: StringDecoder;
     pretty: PrettySimple;
 
     constructor() {
         super();
-        this.pretty = new PrettySimple(10);
+        this.pretty = new PrettySimple(10); // TODO allow level configuration
         this.decoder = new StringDecoder();
     }
 
@@ -27,14 +27,14 @@ class PrettyTransform extends Transform {
         }
 
         const data = this.decoder.write(chunk);
-        const json = getJson(data);
+        const json = tryGetJson(data);
         if (json == null) {
-            return callback(null, chunk);
+            return callback(null, chunk + '\n');
         }
 
         const output = this.pretty.pretty(json);
         if (output == null) {
-            return callback(null, chunk);
+            return callback(null, chunk + '\n');
         }
         callback(null, output + '\n');
     }

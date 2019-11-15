@@ -2,8 +2,8 @@
 export interface LogMessage extends Record<string, any> {
     /** Log level */
     level: number;
-    /** Time stamp either a ISO8601 string or a timestamp number in ms */
-    time: number | string;
+    /** Time stamp either a ISO8601 string, timestamp number in ms or a Date */
+    time: number | string | Date;
     /** Log message */
     msg: string;
 }

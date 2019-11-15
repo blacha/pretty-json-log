@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { LogMessage, LogMessageFormatter } from '../msg';
 
 function getLogStatus(level: number): string {

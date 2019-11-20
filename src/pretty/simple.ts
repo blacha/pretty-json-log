@@ -6,7 +6,7 @@ function getLogStatus(level: number): string {
         return chalk.gray('TRACE');
     }
     if (level <= 20) {
-        return chalk.yellowBright('DEBUG');
+        return chalk.magenta('DEBUG');
     }
     if (level <= 30) {
         return chalk.cyan('INFO');

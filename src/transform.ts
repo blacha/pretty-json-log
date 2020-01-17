@@ -1,4 +1,5 @@
-import { Transform, TransformCallback } from 'stream';
+import * as split from 'split2';
+import { PassThrough, pipeline, Readable, Stream, Transform, TransformCallback, Writable } from 'stream';
 import { StringDecoder } from 'string_decoder';
 import { PrettySimple } from './pretty/simple';
 
@@ -13,6 +14,15 @@ function tryGetJson(data: any) {
 export class PrettyTransform extends Transform {
     decoder: StringDecoder;
     pretty: PrettySimple;
+
+    /**
+     * Pretty print all the output from the that will pretty print anything written to it
+     * @param source the source stream to read from
+     * @param dest the destination stream
+     */
+    static pretty(source: Readable, dest: Writable = process.stdout): void {
+        pipeline(source, split(), new PrettyTransform(), dest, err => console.error('PrettyTransformFailed', err));
+    }
 
     constructor() {
         super();

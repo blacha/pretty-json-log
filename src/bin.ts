@@ -1,5 +1,4 @@
-import * as split from 'split2';
-import { pipeline } from 'stream';
 import { PrettyTransform } from './transform';
 
-pipeline(process.stdin, split(), new PrettyTransform(), process.stdout, err => console.error(err));
+/** Pretty print everything from stdin onto stdout */
+PrettyTransform.pretty(process.stdin, process.stdout);

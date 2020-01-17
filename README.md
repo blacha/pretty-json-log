@@ -20,3 +20,19 @@ npm i -g pretty-json-log
 
 cat <log-file> | pjl
 ```
+
+## Basic log type
+
+To be pretty printable the basic json line needs to have:
+
+```typescript
+/** Base log object every log object should have at minimum these three keys */
+export interface LogMessage extends Record<string, any> {
+    /** Log level */
+    level: number;
+    /** Time stamp either a ISO8601 string, timestamp number in ms or a Date */
+    time: number | string | Date;
+    /** Log message */
+    msg: string;
+}
+```

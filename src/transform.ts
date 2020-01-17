@@ -1,5 +1,5 @@
 import * as split from 'split2';
-import { pipeline, Readable, Transform, TransformCallback, Writable } from 'stream';
+import { pipeline, Readable, Transform, TransformCallback, Writable, PassThrough } from 'stream';
 import { StringDecoder } from 'string_decoder';
 import { PrettySimple } from './pretty/simple';
 
@@ -16,12 +16,24 @@ export class PrettyTransform extends Transform {
     pretty: PrettySimple;
 
     /**
+     * Create a writeable stream that will pretty print anything that is written to it onto the output stream
+     *  @param output the destination stream
+     */
+    static stream(output: Writable = process.stdout) {
+        const passThrough = new PassThrough();
+        PrettyTransform.pretty(passThrough, output);
+        return passThrough;
+    }
+
+    /**
      * Pretty print all the output from source stream onto the output stream
      * @param source the source stream to read from
      * @param output the destination stream
      */
-    static pretty(source: Readable, output: Writable = process.stdout): void {
-        pipeline(source, split(), new PrettyTransform(), output, err => console.error('PrettyTransformFailed', err));
+    static pretty(source: Readable, output: Writable = process.stdout): PrettyTransform {
+        const transform = new PrettyTransform();
+        pipeline(source, split(), transform, output, err => console.error('PrettyTransformFailed', err));
+        return transform;
     }
 
     constructor() {

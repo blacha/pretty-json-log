@@ -16,12 +16,12 @@ export class PrettyTransform extends Transform {
     pretty: PrettySimple;
 
     /**
-     * Pretty print all the output from the that will pretty print anything written to it
+     * Pretty print all the output from source stream onto the output stream
      * @param source the source stream to read from
-     * @param dest the destination stream
+     * @param output the destination stream
      */
-    static pretty(source: Readable, dest: Writable = process.stdout): void {
-        pipeline(source, split(), new PrettyTransform(), dest, err => console.error('PrettyTransformFailed', err));
+    static pretty(source: Readable, output: Writable = process.stdout): void {
+        pipeline(source, split(), new PrettyTransform(), output, err => console.error('PrettyTransformFailed', err));
     }
 
     constructor() {

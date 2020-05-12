@@ -1,28 +1,28 @@
-import * as chalk from 'chalk';
+import * as c from 'ansi-colors';
 import { LogMessage, LogMessageFormatter } from '../msg';
 
 function getLogStatus(level: number): string {
     if (level <= 10) {
-        return chalk.gray('TRACE');
+        return c.gray('TRACE');
     }
     if (level <= 20) {
-        return chalk.magenta('DEBUG');
+        return c.magenta('DEBUG');
     }
     if (level <= 30) {
-        return chalk.cyan('INFO');
+        return c.cyan('INFO');
     }
     if (level <= 40) {
-        return chalk.yellow('WARN');
+        return c.yellow('WARN');
     }
     if (level <= 50) {
-        return chalk.red('ERROR');
+        return c.red('ERROR');
     }
-    return chalk.bgRed('FATAL');
+    return c.bgRed('FATAL');
 }
 
 export class PrettySimple implements LogMessageFormatter {
     /** Don't print these keys */
-    ignore: { [key: string]: boolean } = {
+    static Ignore: { [key: string]: boolean } = {
         pid: true,
         time: true,
         hostname: true,
@@ -38,10 +38,10 @@ export class PrettySimple implements LogMessageFormatter {
         this.level = level;
     }
 
-    private formatObject(obj: Record<string, any>): string[] {
+    public static formatObject(obj: Record<string, any>): string[] {
         const kvs = [];
         for (const key of Object.keys(obj)) {
-            if (this.ignore[key] === true) {
+            if (PrettySimple.Ignore[key] === true) {
                 continue;
             }
 
@@ -53,9 +53,9 @@ export class PrettySimple implements LogMessageFormatter {
             let output = '';
             const typeofValue = typeof value;
             if (typeofValue === 'number') {
-                output = chalk.yellow(String(value));
+                output = c.yellow(String(value));
             } else if (typeofValue === 'string') {
-                output = chalk.green(value);
+                output = c.green(value);
             } else if (typeofValue === 'object') {
                 const subOutput = this.formatObject(value);
                 if (subOutput.length > 0) {
@@ -66,7 +66,7 @@ export class PrettySimple implements LogMessageFormatter {
             }
 
             if (output != '') {
-                kvs.push(`${chalk.dim(key)}=${output}`);
+                kvs.push(`${c.dim(key)}=${output}`);
             }
         }
         return kvs;
@@ -82,8 +82,8 @@ export class PrettySimple implements LogMessageFormatter {
             return null;
         }
 
-        const kvs = this.formatObject(msg);
+        const kvs = PrettySimple.formatObject(msg);
         const kvString = kvs.join(' ');
-        return `[${time.toISOString()}] ${getLogStatus(msg.level)} ${chalk.blue(msg.msg)} ${kvString}`;
+        return `[${time.toISOString()}] ${getLogStatus(msg.level)} ${c.blue(msg.msg)} ${kvString}`;
     }
 }

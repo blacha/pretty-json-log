@@ -59,7 +59,7 @@ export class PrettySimple implements LogMessageFormatter {
             } else if (typeofValue === 'object') {
                 const subOutput = this.formatObject(value);
                 if (subOutput.length > 0) {
-                    output = `{ ${subOutput.join(', ')} }`;
+                    output = `{ ${subOutput.join(' ')} }`;
                 }
             } else {
                 output = String(value);
@@ -83,7 +83,7 @@ export class PrettySimple implements LogMessageFormatter {
         }
 
         const kvs = this.formatObject(msg);
-        const kvString = kvs.join(', ');
+        const kvString = kvs.join(' ');
         return `[${time.toISOString()}] ${getLogStatus(msg.level)} ${chalk.blue(msg.msg)} ${kvString}`;
     }
 }

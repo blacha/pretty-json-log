@@ -32,7 +32,7 @@ export class PrettyTransform extends Transform {
      */
     static pretty(source: Readable, output: Writable = process.stdout): PrettyTransform {
         const transform = new PrettyTransform();
-        pipeline(source, split(), transform, output, err => console.error('PrettyTransformFailed', err));
+        pipeline(source, split(), transform, output, (err) => console.error('PrettyTransformFailed', err));
         return transform;
     }
 

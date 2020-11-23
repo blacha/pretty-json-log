@@ -11,6 +11,11 @@ function tryGetJson(data: any) {
     }
 }
 
+function logError(err: NodeJS.ErrnoException | null): void {
+    if (err == null) return;
+    console.error('PrettyTransformFailed', err);
+}
+
 export class PrettyTransform extends Transform {
     decoder: StringDecoder;
     pretty: PrettySimple;
@@ -32,7 +37,7 @@ export class PrettyTransform extends Transform {
      */
     static pretty(source: Readable, output: Writable = process.stdout): PrettyTransform {
         const transform = new PrettyTransform();
-        pipeline(source, split(), transform, output, (err) => console.error('PrettyTransformFailed', err));
+        pipeline(source, split(), transform, output, logError);
         return transform;
     }
 

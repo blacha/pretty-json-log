@@ -2,21 +2,11 @@ import * as c from 'ansi-colors';
 import { LogMessage, LogMessageFormatter } from '../msg';
 
 function getLogStatus(level: number): string {
-  if (level <= 10) {
-    return c.gray('TRACE');
-  }
-  if (level <= 20) {
-    return c.magenta('DEBUG');
-  }
-  if (level <= 30) {
-    return c.cyan('INFO');
-  }
-  if (level <= 40) {
-    return c.yellow('WARN');
-  }
-  if (level <= 50) {
-    return c.red('ERROR');
-  }
+  if (level <= 10) return c.gray('TRACE');
+  if (level <= 20) return c.magenta('DEBUG');
+  if (level <= 30) return c.cyan('INFO');
+  if (level <= 40) return c.yellow('WARN');
+  if (level <= 50) return c.red('ERROR');
   return c.bgRed('FATAL');
 }
 

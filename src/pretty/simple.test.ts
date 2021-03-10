@@ -1,4 +1,4 @@
-import * as o from 'ospec';
+import o from 'ospec';
 import { PrettySimple } from './simple';
 
 o.spec('Simple', () => {

@@ -1,4 +1,4 @@
-import * as split from 'split2';
+import split from 'split2';
 import { pipeline, Readable, Transform, TransformCallback, Writable, PassThrough } from 'stream';
 import { StringDecoder } from 'string_decoder';
 import { PrettySimple } from './pretty/simple';

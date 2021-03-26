@@ -12,15 +12,7 @@ function getLogStatus(level: number): string {
 
 export class PrettySimple implements LogMessageFormatter {
   /** Don't print these keys */
-  static Ignore: { [key: string]: boolean } = {
-    pid: true,
-    time: true,
-    hostname: true,
-    level: true,
-    v: true,
-    name: true,
-    msg: true,
-  };
+  static Ignore: Set<string> = new Set(['pid', 'time', 'hostname', 'level', 'v', 'name', 'msg']);
 
   /** minimum log level to print */
   level: number;
@@ -31,14 +23,10 @@ export class PrettySimple implements LogMessageFormatter {
   public static formatObject(obj: Record<string, any>): string[] {
     const kvs = [];
     for (const key of Object.keys(obj)) {
-      if (PrettySimple.Ignore[key] === true) {
-        continue;
-      }
+      if (PrettySimple.Ignore.has(key)) continue;
 
       const value = obj[key];
-      if (value == null || value === '') {
-        continue;
-      }
+      if (value == null || value === '') continue;
 
       let output = '';
       const typeofValue = typeof value;
@@ -63,14 +51,10 @@ export class PrettySimple implements LogMessageFormatter {
   }
 
   pretty(msg: LogMessage): string | null {
-    if (msg.level < this.level) {
-      return null;
-    }
+    if (msg.level < this.level) return null;
 
     const time = new Date(msg.time);
-    if (isNaN(time.getTime())) {
-      return null;
-    }
+    if (isNaN(time.getTime())) return null;
 
     const kvs = PrettySimple.formatObject(msg);
     const kvString = kvs.join(' ');

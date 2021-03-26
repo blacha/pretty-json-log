@@ -54,14 +54,10 @@ export class PrettyTransform extends Transform {
 
     const data = this.decoder.write(chunk);
     const json = tryGetJson(data);
-    if (json == null) {
-      return callback(null, chunk + '\n');
-    }
+    if (json == null) return callback(null, chunk + '\n');
 
     const output = this.pretty.pretty(json);
-    if (output == null) {
-      return callback(null, chunk + '\n');
-    }
+    if (output == null) return callback(null, chunk + '\n');
     callback(null, output + '\n');
   }
 }

@@ -43,7 +43,7 @@ export class PrettySimple implements LogMessageFormatter {
         output = String(value);
       }
 
-      if (output != '') {
+      if (output !== '') {
         kvs.push(`${c.dim(key)}=${output}`);
       }
     }

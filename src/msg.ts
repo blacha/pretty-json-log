@@ -1,5 +1,5 @@
 /** Base log object every log object should have at minimum these three keys */
-export interface LogMessage extends Record<string, any> {
+export interface LogMessage extends Record<string, unknown> {
   /** Log level */
   level: number;
   /** Time stamp either a ISO8601 string, timestamp number in ms or a Date */

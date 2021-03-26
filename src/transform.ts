@@ -3,7 +3,7 @@ import { pipeline, Readable, Transform, TransformCallback, Writable, PassThrough
 import { StringDecoder } from 'string_decoder';
 import { PrettySimple } from './pretty/simple';
 
-function tryGetJson(data: any) {
+function tryGetJson(data: string) {
   try {
     return JSON.parse(data);
   } catch {
@@ -24,7 +24,7 @@ export class PrettyTransform extends Transform {
    * Create a writeable stream that will pretty print anything that is written to it onto the output stream
    *  @param output the destination stream
    */
-  static stream(output: Writable = process.stdout) {
+  static stream(output: Writable = process.stdout): PassThrough {
     const passThrough = new PassThrough();
     PrettyTransform.pretty(passThrough, output);
     return passThrough;
@@ -47,7 +47,7 @@ export class PrettyTransform extends Transform {
     this.decoder = new StringDecoder();
   }
 
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: Buffer, encoding: string, callback: TransformCallback): void {
     if (encoding !== 'buffer') {
       return callback(new Error(`Unknown encoding: ${encoding}`));
     }

@@ -87,10 +87,10 @@
   resolved "https://registry.yarnpkg.com/@types/ospec/-/ospec-4.0.2.tgz#cb516a7c576df74d41d9fd4c6f810241750af31c"
   integrity sha512-AFAcbt+oRaDd9zAPIW583oKNKUHWeisAI/soH3odv0Jm9ZFHGPYhU6L769StwOxxtaW8fu5i5SXqLBx7u+7lSA==
 
-"@types/split2@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/@types/split2/-/split2-2.1.6.tgz#b095c9e064853824b22c67993d99b066777402b1"
-  integrity sha512-ddaFSOMuy2Rp97l6q/LEteQygvTQJuEZ+SRhxFKR0uXGsdbFDqX/QF2xoGcOqLQ8XV91v01SnAv2vpgihNgW/Q==
+"@types/split2@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@types/split2/-/split2-3.2.0.tgz#a14f5acb1719aca5e6bcd3706f0df5c5b986802b"
+  integrity sha512-Wb9kp2BW5Qs38oyAS36t+wDN9eE6bFt8fpJ0DpYX6R5Og5tY003m8v1H2cEv8bpF9vLpPXago5pgsCgPka8BVQ==
   dependencies:
     "@types/node" "*"
 

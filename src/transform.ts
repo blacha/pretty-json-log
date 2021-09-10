@@ -1,8 +1,8 @@
 import split from 'split2';
 import { pipeline, Readable, Transform, TransformCallback, Writable, PassThrough } from 'stream';
 import { StringDecoder } from 'string_decoder';
-import { LogMessage } from './msg';
-import { PrettySimple } from './pretty/simple';
+import { LogMessage } from './msg.js';
+import { PrettySimple } from './pretty/simple.js';
 
 function tryGetJson(data: string): null | Record<string, unknown> {
   try {

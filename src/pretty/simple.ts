@@ -1,5 +1,5 @@
-import * as c from 'ansi-colors';
-import { LogMessage, LogMessageFormatter } from '../msg';
+import c from 'ansi-colors';
+import { LogMessage, LogMessageFormatter } from '../msg.js';
 
 function getLogStatus(level: number): string {
   if (level <= 10) return c.gray('TRACE');

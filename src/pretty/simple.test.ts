@@ -1,5 +1,5 @@
 import o from 'ospec';
-import { PrettySimple } from './simple';
+import { PrettySimple } from './simple.js';
 
 o.spec('Simple', () => {
   o('should return null when below log level', () => {

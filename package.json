@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc --pretty",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "test": "ospec build/**/*.test.js"
+    "test": "ospec build/**/*.test.js",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "repository": {
     "url": "https://github.com/blacha/pretty-json-log"
@@ -24,6 +25,7 @@
     "@types/node": "^16.7.10",
     "@types/ospec": "^4.0.2",
     "@types/split2": "^3.2.0",
+    "conventional-changelog-cli": "^2.1.1",
     "conventional-github-releaser": "^3.1.5",
     "ospec": "^4.0.0"
   },

@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "ansi-colors": "^4.1.1",
-    "split2": "^3.1.1"
+    "split2": "^4.0.0"
   },
   "files": [
     "build/",

@@ -1,6 +1,6 @@
 {
   "name": "pretty-json-log",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "bin": {
     "pjl": "pjl.js"
   },

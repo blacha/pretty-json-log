@@ -1,5 +1,5 @@
 import c from 'ansi-colors';
-import { LogMessage, LogMessageFormatter, SkipLine } from '../msg.js';
+import { LogMessage, LogMessageFormatter, LogSkipLine } from '../msg.js';
 
 function getLogStatus(level: number): string {
   if (level <= 10) return c.gray('TRACE');
@@ -50,9 +50,9 @@ export class PrettySimple implements LogMessageFormatter {
     return kvs;
   }
 
-  pretty(msg: LogMessage): string | null | typeof SkipLine {
+  pretty(msg: LogMessage): string | null | typeof LogSkipLine {
     // Log is filtered out
-    if (msg.level < this.level) return SkipLine;
+    if (msg.level < this.level) return LogSkipLine;
 
     const time = new Date(msg.time);
     if (isNaN(time.getTime())) return null;

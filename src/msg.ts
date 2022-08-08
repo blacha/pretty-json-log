@@ -8,11 +8,11 @@ export interface LogMessage extends Record<string, unknown> {
   msg: string;
 }
 
-export const SkipLine = Symbol('SkipLine');
+export const LogSkipLine = Symbol('SkipLine');
 
 export interface LogMessageFormatter {
   /** Attempt to prettify the message
    * @returns pretty message, null if prettyifying failed
    */
-  pretty(message: LogMessage): string | null | typeof SkipLine;
+  pretty(message: LogMessage): string | null | typeof LogSkipLine;
 }

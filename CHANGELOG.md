@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/blacha/pretty-json-log/compare/v1.1.0...v1.1.1) (2022-08-08)
+
+
+### Bug Fixes
+
+* export LogSkipLine symbol ([a41ca90](https://github.com/blacha/pretty-json-log/commit/a41ca90))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/blacha/pretty-json-log/compare/v1.0.0...v1.1.0) (2022-08-08)
 

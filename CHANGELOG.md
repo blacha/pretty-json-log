@@ -1,3 +1,14 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/blacha/pretty-json-log/compare/v1.0.0...v1.1.0) (2022-08-08)
+
+
+### Features
+
+* allow configuration of the transform with .stream() ([793467a](https://github.com/blacha/pretty-json-log/commit/793467a))
+* **cli:** allow skipping of logs with --level :number ([2d68bf1](https://github.com/blacha/pretty-json-log/commit/2d68bf1))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/blacha/pretty-json-log/compare/v0.3.5...v1.0.0) (2021-09-11)
 

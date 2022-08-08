@@ -11,8 +11,10 @@ export interface LogMessage extends Record<string, unknown> {
 export const LogSkipLine = Symbol('SkipLine');
 
 export interface LogMessageFormatter {
-  /** Attempt to prettify the message
-   * @returns pretty message, null if prettyifying failed
+  /**
+   * Attempt to prettify a message
+   *
+   * @returns pretty message, null if prettyifying failed, SkipLine if line should be ignlred
    */
   pretty(message: LogMessage): string | null | typeof LogSkipLine;
 }

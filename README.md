@@ -18,7 +18,13 @@ into
 ```bash
 npm i -g pretty-json-log
 
-cat <log-file> | pjl
+cat <log-file> | pjl 
+```
+
+Logs can be filtered using `--level`
+
+```
+cat <log-file> | pjl --level 20
 ```
 
 ## Basic log type

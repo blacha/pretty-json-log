@@ -1,7 +1,7 @@
 import split from 'split2';
 import { pipeline, Readable, Transform, TransformCallback, Writable, PassThrough } from 'stream';
 import { StringDecoder } from 'string_decoder';
-import { LogMessage } from './msg.js';
+import { LogMessage, SkipLine } from './msg.js';
 import { PrettySimple } from './pretty/simple.js';
 
 function tryGetJson(data: string): null | Record<string, unknown> {
@@ -52,15 +52,14 @@ export class PrettyTransform extends Transform {
   }
 
   _transform(chunk: Buffer, encoding: string, callback: TransformCallback): void {
-    if (encoding !== 'buffer') {
-      return callback(new Error(`Unknown encoding: ${encoding}`));
-    }
+    if (encoding !== 'buffer') return callback(new Error(`Unknown encoding: ${encoding}`));
 
     const data = this.decoder.write(chunk);
     const json = tryGetJson(data);
     if (json == null) return callback(null, chunk + '\n');
 
     const output = this.pretty.pretty(json as LogMessage);
+    if (output === SkipLine) return callback(null, null);
     if (output == null) return callback(null, chunk + '\n');
     callback(null, output + '\n');
   }

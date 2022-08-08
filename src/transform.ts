@@ -25,9 +25,9 @@ export class PrettyTransform extends Transform {
    * Create a writeable stream that will pretty print anything that is written to it onto the output stream
    *  @param output the destination stream
    */
-  static stream(output: Writable = process.stdout): PassThrough {
+  static stream(output: Writable = process.stdout, transform = new PrettyTransform()): PassThrough {
     const passThrough = new PassThrough();
-    PrettyTransform.pretty(passThrough, output);
+    PrettyTransform.pretty(passThrough, output, transform);
     return passThrough;
   }
 
@@ -36,8 +36,11 @@ export class PrettyTransform extends Transform {
    * @param source the source stream to read from
    * @param output the destination stream
    */
-  static pretty(source: Readable, output: Writable = process.stdout): PrettyTransform {
-    const transform = new PrettyTransform();
+  static pretty(
+    source: Readable,
+    output: Writable = process.stdout,
+    transform = new PrettyTransform(),
+  ): PrettyTransform {
     pipeline(source, split(), transform, output, logError);
     return transform;
   }

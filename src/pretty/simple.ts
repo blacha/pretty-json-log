@@ -68,10 +68,12 @@ export class PrettySimple implements LogMessageFormatter {
     const isOt = OpenTelemetryLogs.isOtLog(msg);
     const level = isOt ? OpenTelemetryLogs.normalizeLevel(msg.SeverityNumber) : msg.level;
 
+    console.log(msg, { isOt, level });
     // Log is filtered out
     if (level < this.level) return LogSkipLine;
 
-    const time = new Date(isOt ? msg.Timestamp : msg.time);
+    const time = isOt ? OpenTelemetryLogs.normalizeTime(msg.Timestamp) : new Date(msg.time);
+    console.log(time, msg.Timestamp, OpenTelemetryLogs.normalizeTime((msg as any).Timestamp));
     if (isNaN(time.getTime())) return null;
 
     const kvs = PrettySimple.formatObject(msg);

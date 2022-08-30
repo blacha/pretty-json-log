@@ -1,5 +1,6 @@
 import c from 'ansi-colors';
 import { LogMessage, LogMessageFormatter, LogSkipLine } from '../msg.js';
+import { OpenTelemetryLogs } from '../msg.open.telemetry.js';
 
 function getLogStatus(level: number): string {
   if (level <= 10) return c.gray('TRACE');
@@ -12,7 +13,20 @@ function getLogStatus(level: number): string {
 
 export class PrettySimple implements LogMessageFormatter {
   /** Don't print these keys */
-  static Ignore: Set<string> = new Set(['pid', 'time', 'hostname', 'level', 'v', 'name', 'msg']);
+  static Ignore: Set<string> = new Set([
+    // pino formats
+    'pid',
+    'time',
+    'hostname',
+    'level',
+    'v',
+    'name',
+    'msg',
+    // Open Telemetry Defaults
+    'Timestamp',
+    'SeverityText',
+    'SeverityNumber',
+  ]);
 
   /** minimum log level to print */
   level: number;
@@ -51,14 +65,17 @@ export class PrettySimple implements LogMessageFormatter {
   }
 
   pretty(msg: LogMessage): string | null | typeof LogSkipLine {
-    // Log is filtered out
-    if (msg.level < this.level) return LogSkipLine;
+    const isOt = OpenTelemetryLogs.isOtLog(msg);
+    const level = isOt ? OpenTelemetryLogs.normalizeLevel(msg.SeverityNumber) : msg.level;
 
-    const time = new Date(msg.time);
+    // Log is filtered out
+    if (level < this.level) return LogSkipLine;
+
+    const time = new Date(isOt ? msg.Timestamp : msg.time);
     if (isNaN(time.getTime())) return null;
 
     const kvs = PrettySimple.formatObject(msg);
     const kvString = kvs.join(' ');
-    return `[${time.toISOString()}] ${getLogStatus(msg.level)} ${c.blue(msg.msg)} ${kvString}`;
+    return `[${time.toISOString()}] ${getLogStatus(level)} ${c.blue(isOt ? String(msg.Body) : msg.msg)} ${kvString}`;
   }
 }

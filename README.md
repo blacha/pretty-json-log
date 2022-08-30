@@ -31,6 +31,8 @@ cat <log-file> | pjl --level 20
 
 To be pretty printable the basic json line needs to have:
 
+Either PinoJS log message
+
 ```typescript
 /** Base log object every log object should have at minimum these three keys */
 export interface LogMessage extends Record<string, any> {
@@ -40,5 +42,18 @@ export interface LogMessage extends Record<string, any> {
     time: number | string | Date;
     /** Log message */
     msg: string;
+}
+```
+
+A [OpenTelemetry](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md) Log Message
+
+```typescript
+export interface LogMessageOpenTelemetry {
+    /** Timestamp in nanoseconds if a string, or ms if a number */
+    Timestamp: number | string
+    /** Message body */
+    Body?: unknown;
+    Resource?: Record<string, unknown>;
+    Attributes?: Record<string, unknown>;
 }
 ```

@@ -21,9 +21,8 @@ export const OpenTelemetryLogs = {
     return 'FATAL'; // TODO should this be defaulted
   },
   normalizeTime(time: string | number): Date {
-    const timeType = typeof time;
-    if (timeType === 'number') return new Date(timeType);
-    return new Date(parseFloat(timeType) / 10000000);
+    if (typeof time === 'number') return new Date(time);
+    return new Date(parseFloat(time) / 10000000);
   },
 
   isOtLog(msg: LogMessage): msg is LogMessageOpenTelemetry {

@@ -56,7 +56,6 @@ export class PrettyTransform extends Transform {
 
     const data = this.decoder.write(chunk);
     const json = tryGetJson(data);
-    console.log('Line', data, json == null);
     if (json == null) return callback(null, chunk + '\n');
 
     const output = this.pretty.pretty(json as LogMessage);

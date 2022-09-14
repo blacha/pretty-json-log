@@ -29,6 +29,14 @@ Logs can be filtered using `--level`
 cat <log-file> | pjl --level 20
 ```
 
+### OpenTelemetry Log options
+
+Do not output `Resources` 
+
+```
+cat <log-file> | pjl --ignore-resources
+```
+
 ## Basic log type
 
 To be pretty printable the basic json line needs to have:

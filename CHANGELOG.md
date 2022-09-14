@@ -1,4 +1,11 @@
 <a name="1.1.2"></a>
+## [1.3.0](https://github.com/blacha/pretty-json-log/compare/v1.2.0...v1.3.0) (2022-09-14)
+
+
+### Features
+
+* better format for the open telemetry log format ([#319](https://github.com/blacha/pretty-json-log/issues/319)) ([85acc4b](https://github.com/blacha/pretty-json-log/commit/85acc4bf45892c55220e6f3ebcd6170a30fd61a4))
+
 ## [1.2.0](https://github.com/blacha/pretty-json-log/compare/v1.1.2...v1.2.0) (2022-08-30)
 
 

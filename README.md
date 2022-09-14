@@ -13,7 +13,7 @@ into
 
 ![Example output](./static/pretty-output.png)
 
-![Example output OpenTelemetry](./static/prety-output-ot.png)
+![Example output OpenTelemetry](./static/pretty-output-ot.png)
 
 ## Install
 

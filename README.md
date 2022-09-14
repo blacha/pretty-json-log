@@ -13,7 +13,7 @@ into
 
 ![Example output](./static/pretty-output.png)
 
-![Example output OpenTelemetry](./static/prety-output-ot.png)
+![Example output OpenTelemetry](./static/pretty-output-ot.png)
 
 ## Install
 
@@ -27,6 +27,14 @@ Logs can be filtered using `--level`
 
 ```
 cat <log-file> | pjl --level 20
+```
+
+### OpenTelemetry Log options
+
+Do not output `Resources` 
+
+```
+cat <log-file> | pjl --ignore-resources
 ```
 
 ## Basic log type

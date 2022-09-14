@@ -1,4 +1,11 @@
 <a name="1.1.2"></a>
+## [1.2.0](https://github.com/blacha/pretty-json-log/compare/v1.1.2...v1.2.0) (2022-08-30)
+
+
+### Features
+
+* support opentelemtry log data model ([064a4af](https://github.com/blacha/pretty-json-log/commit/064a4afec651fc8eef8682330de8d594fc6f45b6))
+
 ## [1.1.2](https://github.com/blacha/pretty-json-log/compare/v1.1.1...v1.1.2) (2022-08-08)
 
 
@@ -196,6 +203,3 @@
 ### Features
 
 * initial commit ([285912a](https://github.com/blacha/pretty-json-log/commit/285912a))
-
-
-

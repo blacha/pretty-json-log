@@ -13,6 +13,8 @@ into
 
 ![Example output](./static/pretty-output.png)
 
+![Example output OpenTelemetry](./static/prety-output-ot.png)
+
 ## Install
 
 ```bash
@@ -31,7 +33,9 @@ cat <log-file> | pjl --level 20
 
 To be pretty printable the basic json line needs to have:
 
-Either PinoJS log message
+Either:
+
+1. A PinoJS log message
 
 ```typescript
 /** Base log object every log object should have at minimum these three keys */
@@ -45,7 +49,7 @@ export interface LogMessage extends Record<string, any> {
 }
 ```
 
-A [OpenTelemetry](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md) Log Message
+2. A [OpenTelemetry](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md) Log Message
 
 ```typescript
 export interface LogMessageOpenTelemetry {

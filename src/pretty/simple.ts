@@ -1,5 +1,5 @@
 import c from 'ansi-colors';
-import { LogMessage, LogMessageFormatter, LogSkipLine } from '../msg.js';
+import { LogMessage, LogMessageFormatter, LogMessageOpenTelemetry, LogMessagePino, LogSkipLine } from '../msg.js';
 import { OpenTelemetryLogs } from '../msg.open.telemetry.js';
 
 function getLogStatus(level: number): string {
@@ -11,9 +11,8 @@ function getLogStatus(level: number): string {
   return c.bgRed('FATAL');
 }
 
-export class PrettySimple implements LogMessageFormatter {
-  /** Don't print these keys */
-  static Ignore: Set<string> = new Set([
+export const PrettySimplePino = {
+  Ignore: new Set<string>([
     // pino formats
     'pid',
     'time',
@@ -22,22 +21,11 @@ export class PrettySimple implements LogMessageFormatter {
     'v',
     'name',
     'msg',
-    // Open Telemetry Defaults
-    'Timestamp',
-    'SeverityText',
-    'SeverityNumber',
-  ]);
-
-  /** minimum log level to print */
-  level: number;
-  constructor(level: number) {
-    this.level = level;
-  }
-
-  public static formatObject(obj: Record<string, any>): string[] {
+  ]),
+  formatObject(obj: Record<string, any>, prefix = ''): string[] {
     const kvs = [];
     for (const key of Object.keys(obj)) {
-      if (PrettySimple.Ignore.has(key)) continue;
+      if (PrettySimplePino.Ignore.has(key)) continue;
 
       const value = obj[key];
       if (value == null || value === '') continue;
@@ -49,7 +37,7 @@ export class PrettySimple implements LogMessageFormatter {
       } else if (typeofValue === 'string') {
         output = c.green(value);
       } else if (typeofValue === 'object') {
-        const subOutput = this.formatObject(value);
+        const subOutput = this.formatObject(value, prefix);
         if (subOutput.length > 0) {
           output = `{ ${subOutput.join(' ')} }`;
         }
@@ -58,24 +46,74 @@ export class PrettySimple implements LogMessageFormatter {
       }
 
       if (output !== '') {
-        kvs.push(`${c.dim(key)}=${output}`);
+        kvs.push(`${prefix}${c.dim(key)}=${output}`);
       }
     }
     return kvs;
+  },
+  pretty(msg: LogMessagePino): string | null {
+    const time = new Date(msg.time);
+    if (isNaN(time.getTime())) return null;
+
+    const kvs = this.formatObject(msg);
+    const kvString = kvs.join(' ');
+    return `[${time.toISOString()}] ${getLogStatus(msg.level)} ${c.blue(msg.msg)} ${kvString}`;
+  },
+};
+
+const PrettySimpleOpenTelemetry = {
+  Ignore: new Set(['Body', 'Timestamp', 'SeverityText', 'SeverityNumber']),
+
+  formatTrace(msg: LogMessageOpenTelemetry): string {
+    if (msg.TraceId == null) return '';
+    const t = c.magentaBright('t.');
+    const output = [`${t}${c.dim('trace.id')}=${msg.TraceId}`];
+
+    if (msg.SpanId) output.push(`${t}${c.dim('trace.span')}=${msg.SpanId}`);
+    if (msg.TraceFlags) output.push(`${t}${c.dim('trace.flags')}=${msg.TraceFlags}`);
+
+    return output.join(' ');
+  },
+
+  pretty(msg: LogMessageOpenTelemetry, options?: PrettySimpleOptions): string | null {
+    const time = OpenTelemetryLogs.normalizeTime(msg.Timestamp);
+    if (isNaN(time.getTime())) return null;
+    const level = OpenTelemetryLogs.normalizeLevel(msg.SeverityNumber);
+
+    const resources = msg.Resource ? PrettySimplePino.formatObject(msg.Resource, c.redBright('r.')).join(' ') : '';
+    const attrs = msg.Attributes ? PrettySimplePino.formatObject(msg.Attributes, c.cyanBright('a.')).join(' ') : '';
+    const trace = this.formatTrace(msg);
+
+    const suffix = [];
+    if (trace) suffix.push(trace);
+    if (resources && options?.ignoreResources !== true) suffix.push(resources);
+    if (attrs) suffix.push(attrs);
+
+    return `[${time.toISOString()}] ${getLogStatus(level)} ${c.blue(String(msg.Body))} ${suffix.join(' ')}`;
+  },
+};
+
+export interface PrettySimpleOptions {
+  /** Ignore Open Telemetry Resources key */
+  ignoreResources?: boolean;
+}
+
+export class PrettySimple implements LogMessageFormatter {
+  /** minimum log level to print */
+  level: number;
+  options: PrettySimpleOptions;
+  constructor(level: number, options?: PrettySimpleOptions) {
+    this.level = level;
+    this.options = options ?? {};
   }
 
   pretty(msg: LogMessage): string | null | typeof LogSkipLine {
     const isOt = OpenTelemetryLogs.isOtLog(msg);
     const level = isOt ? OpenTelemetryLogs.normalizeLevel(msg.SeverityNumber) : msg.level;
-
     // Log is filtered out
     if (level < this.level) return LogSkipLine;
 
-    const time = new Date(isOt ? msg.Timestamp : msg.time);
-    if (isNaN(time.getTime())) return null;
-
-    const kvs = PrettySimple.formatObject(msg);
-    const kvString = kvs.join(' ');
-    return `[${time.toISOString()}] ${getLogStatus(level)} ${c.blue(isOt ? String(msg.Body) : msg.msg)} ${kvString}`;
+    if (isOt) return PrettySimpleOpenTelemetry.pretty(msg, this.options);
+    return PrettySimplePino.pretty(msg);
   }
 }

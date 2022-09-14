@@ -11,5 +11,8 @@ if (levelOffset > 0) {
   transform.pretty.level = levelVal;
 }
 
+const ignoreResources = process.argv.includes('--ignore-resources');
+transform.pretty.options.ignoreResources = ignoreResources;
+
 /** Pretty print everything from stdin onto stdout */
 PrettyTransform.pretty(process.stdin, process.stdout, transform);

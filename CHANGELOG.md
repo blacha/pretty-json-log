@@ -1,4 +1,11 @@
 <a name="1.1.2"></a>
+## [1.4.0](https://github.com/blacha/pretty-json-log/compare/v1.3.0...v1.4.0) (2023-04-27)
+
+
+### Features
+
+* switch to node-next modules to catch missing ".js" extensions ([40b0d94](https://github.com/blacha/pretty-json-log/commit/40b0d941fc16f70228b4d9a9dc97b399676b581e))
+
 ## [1.3.0](https://github.com/blacha/pretty-json-log/compare/v1.2.0...v1.3.0) (2022-09-14)
 
 

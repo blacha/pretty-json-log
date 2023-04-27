@@ -1,4 +1,4 @@
-import { LogMessageOpenTelemetry } from '../msg';
+import { LogMessageOpenTelemetry } from '../msg.js';
 
 // Source: https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.md
 export const OtMessage1: LogMessageOpenTelemetry = {

@@ -1,4 +1,4 @@
-import { LogMessage, LogMessageOpenTelemetry } from './msg';
+import { LogMessage, LogMessageOpenTelemetry } from './msg.js';
 
 export const OpenTelemetryLogs = {
   normalizeLevel(num: number): number {

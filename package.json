@@ -23,7 +23,7 @@
     "@linzjs/style": "^3.9.0",
     "@types/node": "^18.11.9",
     "@types/ospec": "^4.0.4",
-    "@types/split2": "^3.2.0",
+    "@types/split2": "^4.2.0",
     "ospec": "^4.1.6"
   },
   "engines": {

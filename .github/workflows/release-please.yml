@@ -19,6 +19,9 @@ jobs:
       - name: Ensure latest NPM
         run: npm install -g npm@latest
 
+      - name: Install
+        run: npm install --ci
+
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:

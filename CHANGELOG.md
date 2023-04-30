@@ -1,4 +1,11 @@
 <a name="1.1.2"></a>
+## [1.4.1](https://github.com/blacha/pretty-json-log/compare/v1.4.0...v1.4.1) (2023-04-30)
+
+
+### Bug Fixes
+
+* do not package tsbuildinfo ([1c491e7](https://github.com/blacha/pretty-json-log/commit/1c491e7527482abf4fc760472a7116151d13dd16))
+
 ## [1.4.0](https://github.com/blacha/pretty-json-log/compare/v1.3.0...v1.4.0) (2023-04-27)
 
 

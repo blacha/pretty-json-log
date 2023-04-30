@@ -32,7 +32,7 @@
     "split2": "^4.2.0"
   },
   "files": [
-    "build/",
+    "build/src",
     "pjl.js"
   ]
 }

@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc --pretty",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "test": "ospec build/**/*.test.js"
+    "test": "node --test"
   },
   "repository": {
     "url": "https://github.com/blacha/pretty-json-log"
@@ -22,9 +22,7 @@
   "devDependencies": {
     "@linzjs/style": "^3.9.0",
     "@types/node": "^18.11.9",
-    "@types/ospec": "^4.0.4",
-    "@types/split2": "^3.2.0",
-    "ospec": "^4.1.6"
+    "@types/split2": "^3.2.0"
   },
   "engines": {
     "node": ">=16.0.0"

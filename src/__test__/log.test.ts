@@ -1,15 +1,15 @@
-import assert from 'assert';
-import o from 'ospec';
+import assert from 'node:assert';
+import { describe, it } from 'node:test';
 import { OpenTelemetryLogs } from '../msg.open.telemetry.js';
 import { OtMessage1, OtMessage2 } from './log.messages.js';
 
-o.spec('OpenTelemetryLogFormat', () => {
-  o('should guess a log is in ot format', () => {
+describe('OpenTelemetryLogFormat', () => {
+  it('should guess a log is in ot format', () => {
     assert.equal(OpenTelemetryLogs.isOtLog(OtMessage1), true);
     assert.equal(OpenTelemetryLogs.isOtLog(OtMessage2), true);
   });
 
-  o('should normalize numbers', () => {
+  it('should normalize numbers', () => {
     assert.equal(OpenTelemetryLogs.normalizeLevel(1), 10);
     assert.equal(OpenTelemetryLogs.normalizeLevel(2), 10);
     assert.equal(OpenTelemetryLogs.normalizeLevel(3), 10);
@@ -36,7 +36,7 @@ o.spec('OpenTelemetryLogFormat', () => {
     assert.equal(OpenTelemetryLogs.normalizeLevel(24), 60);
   });
 
-  o('should normalize numbers out of bounds', () => {
+  it('should normalize numbers out of bounds', () => {
     assert.equal(OpenTelemetryLogs.normalizeLevel(-1), 10);
     assert.equal(OpenTelemetryLogs.normalizeLevel(0), 10);
     assert.equal(OpenTelemetryLogs.normalizeLevel(25), 60);
@@ -47,7 +47,7 @@ o.spec('OpenTelemetryLogFormat', () => {
   });
 
   // Not strictly legit
-  o('should normalize text out of bounds', () => {
+  it('should normalize text out of bounds', () => {
     assert.equal(OpenTelemetryLogs.severityToText(-1), 'TRACE');
     assert.equal(OpenTelemetryLogs.severityToText(0), 'TRACE');
     assert.equal(OpenTelemetryLogs.severityToText(25), 'FATAL');
@@ -56,7 +56,7 @@ o.spec('OpenTelemetryLogFormat', () => {
     assert.equal(OpenTelemetryLogs.severityToText(28), 'FATAL');
     assert.equal(OpenTelemetryLogs.severityToText(29), 'FATAL');
   });
-  o('should normalize text', () => {
+  it('should normalize text', () => {
     assert.equal(OpenTelemetryLogs.severityToText(1), 'TRACE');
     assert.equal(OpenTelemetryLogs.severityToText(2), 'TRACE');
     assert.equal(OpenTelemetryLogs.severityToText(3), 'TRACE');

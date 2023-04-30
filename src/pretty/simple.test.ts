@@ -1,17 +1,18 @@
-import o from 'ospec';
+import assert from 'node:assert';
+import { describe, it } from 'node:test';
 import { LogSkipLine } from '../msg.js';
 import { PrettySimple } from './simple.js';
 
-o.spec('Simple', () => {
-  o('should return null when below log level', () => {
+describe('Simple', () => {
+  it('should return null when below log level', () => {
     const simple = new PrettySimple(50);
-    o(simple.pretty({ level: 49, time: 1, msg: 'abc' })).equals(LogSkipLine);
-    o(simple.pretty({ level: 50, time: 1, msg: 'abc' })).notEquals(null);
-    o(simple.pretty({ level: 51, time: 1, msg: 'abc' })).notEquals(null);
+    assert.equal(simple.pretty({ level: 49, time: 1, msg: 'abc' }), LogSkipLine);
+    assert.notEqual(simple.pretty({ level: 50, time: 1, msg: 'abc' }), null);
+    assert.notEqual(simple.pretty({ level: 51, time: 1, msg: 'abc' }), null);
   });
 
-  o('should not pretty if time is not valid', () => {
+  it('should not pretty if time is not valid', () => {
     const simple = new PrettySimple(50);
-    o(simple.pretty({ level: 50, time: 'abc', msg: 'abc' })).equals(null);
+    assert.equal(simple.pretty({ level: 50, time: 'abc', msg: 'abc' }), null);
   });
 });

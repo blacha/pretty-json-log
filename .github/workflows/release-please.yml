@@ -21,9 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ needs.release-please.outputs.release_created }}
     steps:
-      - uses: linz/action-typescript@v1
+      - uses: linz/action-typescript@v2
+        with:
+          package-manager: 'npm'
 
       - name: Publish to Github
-        run: yarn publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

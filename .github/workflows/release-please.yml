@@ -17,6 +17,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish-release:
+    permissions:
+      contents: read
+      id-token: write
+
     needs: release-please
     runs-on: ubuntu-latest
     if: ${{ needs.release-please.outputs.release_created }}
@@ -25,7 +29,11 @@ jobs:
         with:
           package-manager: 'npm'
 
-      - name: Publish to Github
-        run: npm publish
+      - name: Ensure latest NPM
+        run: npm install -g npm@latest
+
+      - name: Publish to NPM
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

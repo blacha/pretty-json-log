@@ -20,7 +20,7 @@
   "license": "MIT",
   "description": "",
   "devDependencies": {
-    "@linzjs/style": "^3.9.0",
+    "@linzjs/style": "^4.0.0",
     "@types/node": "^18.11.9",
     "@types/split2": "^4.2.0"
   },

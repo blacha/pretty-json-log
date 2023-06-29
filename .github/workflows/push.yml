@@ -7,6 +7,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: linz/action-typescript@v2
-        with:
-          package-manager: 'npm'
+      - uses: linz/action-typescript@v3

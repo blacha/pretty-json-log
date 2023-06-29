@@ -31,9 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ needs.release-please.outputs.release_created }}
     steps:
-      - uses: linz/action-typescript@v2
-        with:
-          package-manager: 'npm'
+      - uses: linz/action-typescript@v3
 
       - name: Ensure latest NPM
         run: npm install -g npm@latest

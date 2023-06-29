@@ -51,7 +51,7 @@ export class PrettyTransform extends Transform {
     this.decoder = new StringDecoder();
   }
 
-  _transform(chunk: Buffer, encoding: string, callback: TransformCallback): void {
+  override _transform(chunk: Buffer, encoding: string, callback: TransformCallback): void {
     if (encoding !== 'buffer') return callback(new Error(`Unknown encoding: ${encoding}`));
 
     const data = this.decoder.write(chunk);

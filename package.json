@@ -1,6 +1,6 @@
 {
   "name": "pretty-json-log",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "bin": {
     "pjl": "pjl.js"
   },
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc --pretty",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "test": "node --test"
+    "test": "npm run build && node --test"
   },
   "repository": {
     "url": "https://github.com/blacha/pretty-json-log"

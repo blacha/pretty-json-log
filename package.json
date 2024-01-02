@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc --pretty",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "test": "node --test"
+    "test": "npm run build && node --test"
   },
   "repository": {
     "url": "https://github.com/blacha/pretty-json-log"

@@ -4,9 +4,15 @@ import { StringDecoder } from 'string_decoder';
 import { LogMessage, LogSkipLine } from './msg.js';
 import { PrettySimple } from './pretty/simple.js';
 
-function tryGetJson(data: string): null | Record<string, unknown> {
+export function tryGetJson(data: string): null | Record<string, unknown> {
+  const jsonStart = data.indexOf('{');
+  if (jsonStart === -1) return null;
+
+  const jsonEnd = data.lastIndexOf('}');
+  if (jsonEnd === -1) return null;
+
   try {
-    return JSON.parse(data);
+    return JSON.parse(data.slice(jsonStart, jsonEnd + 1));
   } catch {
     return null;
   }

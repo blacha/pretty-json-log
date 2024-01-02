@@ -11,6 +11,8 @@ function getLogStatus(level: number): string {
   return c.bgRed('FATAL');
 }
 
+type LogObject = Record<string, unknown>;
+
 export const PrettySimplePino = {
   Ignore: new Set<string>([
     // pino formats
@@ -22,7 +24,7 @@ export const PrettySimplePino = {
     'name',
     'msg',
   ]),
-  formatObject(obj: Record<string, any>, prefix = ''): string[] {
+  formatObject(obj: LogObject, prefix = ''): string[] {
     const kvs = [];
     for (const key of Object.keys(obj)) {
       if (PrettySimplePino.Ignore.has(key)) continue;
@@ -35,9 +37,9 @@ export const PrettySimplePino = {
       if (typeofValue === 'number') {
         output = c.yellow(String(value));
       } else if (typeofValue === 'string') {
-        output = c.green(value);
+        output = c.green(value as string);
       } else if (typeofValue === 'object') {
-        const subOutput = this.formatObject(value, prefix);
+        const subOutput = this.formatObject(value as LogObject, prefix);
         if (subOutput.length > 0) {
           output = `{ ${subOutput.join(' ')} }`;
         }

@@ -1,4 +1,16 @@
 <a name="1.1.2"></a>
+## [1.5.0](https://github.com/blacha/pretty-json-log/compare/v1.4.1...v1.5.0) (2024-01-02)
+
+
+### Features
+
+* tolerate dirty json ([#431](https://github.com/blacha/pretty-json-log/issues/431)) ([07db8f7](https://github.com/blacha/pretty-json-log/commit/07db8f7f6c3b19df46ba06bd371e136881a270df))
+
+
+### Bug Fixes
+
+* try checkout before release-please-action ([906c54e](https://github.com/blacha/pretty-json-log/commit/906c54e58029e0107e4b59d3ed369b92853cd96a))
+
 ## [1.4.1](https://github.com/blacha/pretty-json-log/compare/v1.4.0...v1.4.1) (2023-04-30)
 
 
